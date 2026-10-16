@@ -32,8 +32,8 @@ class alu:
         return num
 
     @staticmethod
-    def binary_sub(b1: int, b2: int)->int:
-        pass
+    def binary_sub(b1: int, b2: int)->int: #currently using python TODO: change the algorithm
+        return  b1-b2
 
     @staticmethod
     def binary_xor(b1: int, b2: int)->int:
