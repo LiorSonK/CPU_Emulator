@@ -1,0 +1,3 @@
+add r6, r1, r3
+ooga r1, r2, r3
+mov r7, 42

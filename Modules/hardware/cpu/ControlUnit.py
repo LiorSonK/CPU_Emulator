@@ -21,12 +21,11 @@ class ControlUnit:
     int_to_code = dict([(v,k) for k,v in code_to_int.items()]) #flips keys and values
 
     code_to_type = {
-         #"ret": "?",
          "mov": "R",
          "add": "R",
          "sub": "R",
          "jmp": "U",
-         "load": "u",
+         "load": "U",
          "store": "U",
          "push": "U",
          "pop": "U",
@@ -38,4 +37,5 @@ class ControlUnit:
          "BGE": "I",
          "BGT": "I",
          "BLE": "I",
+        # "ret": "?",
          }
