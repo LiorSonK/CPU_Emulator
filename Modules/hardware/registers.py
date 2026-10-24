@@ -58,16 +58,13 @@ class Registers():
         Registers.latches[0] = dic
 
     @staticmethod
-    def set_decode(opcode, val1, val2, dest):
-        dic = {"opcode": opcode, "val1":val1, "val2":val2, "dest":dest}
+    def set_decode(dic):
         Registers.latches[1] = dic
 
     @staticmethod
-    def set_execute(opcode, result, dest):
-        dic = {"opcode": opcode, "result": result,"dest": dest}
+    def set_execute(dic):
         Registers.latches[2] = dic
 
     @staticmethod
-    def set_memory(opcode, mem_data, result, dest):
-        dic = {"opcode": opcode,"mem_data":mem_data, "result": result, "dest": dest}
+    def set_memory(dic):
         Registers.latches[2] = dic
