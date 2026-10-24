@@ -21,7 +21,7 @@ class ControlUnit:
     int_to_code = dict([(v,k) for k,v in code_to_int.items()]) #flips keys and values
 
     code_to_type = {
-         "mov": "R",
+         "mov": "I", #mov is I for now but its S
          "add": "R",
          "sub": "R",
          "jmp": "U",

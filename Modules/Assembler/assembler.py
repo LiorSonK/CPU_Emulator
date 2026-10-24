@@ -43,13 +43,7 @@ class addembler:
     def pseudo_commands(line): #some commands like mov doesn't have a format so they get replaced.
         cmd,args = line.split(" ", 1)
         if cmd == "mov":
-            rd = args.split(",")[0]
-            try:
-                num = int(args.split(",")[1].strip())
-                return f"addi {rd}, r0, {num}"
-            except ValueError:
-                r1 = args.split(",")[1].strip()
-                return f"add {rd}, {r1}, r0"
+            return line + ", 0"
         return line
 
 
