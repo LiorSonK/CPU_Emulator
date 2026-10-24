@@ -1,3 +1,5 @@
+from distutils.command.register import register
+
 from scapy.contrib.roce import opcode
 
 from Modules.hardware.hardware_const import MEGABYTE
@@ -31,30 +33,30 @@ class cpu:
             result = 0
             match opcode:
                 case "add":
-                    val1 = Ram.ram[val1]
-                    val2 = Ram.ram[val2]
+                    val1 = Registers.getreg_value(val1)
+                    val2 = Registers.getreg_value(val2)
                     result = alu.binary_add(val1,val2)
                 case "sub":
-                    val1 = Ram.ram[val1]
-                    val2 = Ram.ram[val2]
+                    val1 = Registers.getreg_value(val1)
+                    val2 = Registers.getreg_value(val2)
                     result = alu.binary_sub(val1, val2)
                 case "jmp":
                     result = val1
                     dic["dest"] = "pc"
                 case "addi":
-                    val1 = Ram.ram[val1]
+                    val1 = Registers.getreg_value(val1)
                     result = alu.binary_add(val1, val2)
                 case "subi":
-                    val1 = Ram.ram[val1]
+                    val1 = Registers.getreg_value(val1)
                     result = alu.binary_sub(val1, val2)
                 case "beq": #a bit complex so an explanation:
                     #if the values are equal we are jumping to the dest stored in the dest register
                     #so we set the result to where we want to jump
                     #and the dest to the program counter (:
-                    val1 = Ram.ram[val1]
-                    val2 = Ram.ram[val2]
+                    val1 = Registers.getreg_value(val1)
+                    val2 = Registers.getreg_value(val2)
                     result = None
-                    dest = Ram.ram[dest]
+                    dest = Registers.getreg_value(dest)
                     if val1 == val2:
                         result = dest
                     dic["dest"] = "pc"
@@ -62,7 +64,7 @@ class cpu:
             dic["result"] = result
 
         else:
-            dic = {"opcode":opcode, "result":val1, "dest": dest}
+            dic = {"opcode":opcode, "result":Registers.getreg_value(val1), "dest": dest}
         Registers.set_execute(dic)
 
 
@@ -70,19 +72,27 @@ class cpu:
     def memory():
         opcode = Registers.get_alu()["opcode"]
         dest = Registers.get_alu()["dest"]
-        val1 = Registers.get_alu()["val1"]
+        result = Registers.get_alu()["result"]
         memory_buffer = MEGABYTE/2
         dic = Registers.get_alu()
         dic["mem_data"] = None
         if opcode in needs_memo:
             match opcode:
                 case "store":
-                    Ram.write_ram(memory_buffer + dest, val1)
+                    Ram.write_ram(memory_buffer + Registers.getreg_value(dest), Registers.getreg_value(result))
                 case "load":
-                    dic["mem_data"] = Ram.read_ram(memory_buffer + dest)
+                    dic["mem_data"] = Ram.read_ram(memory_buffer + Registers.getreg_value(result))
 
         Registers.set_memory(dic)
 
     @staticmethod
     def writeback():
-        pass
+        opcode = Registers.get_memory()["opcode"]
+        dest = Registers.get_memory()["dest"]
+        result = Registers.get_memory()["result"]
+        mem_data = Registers.get_memory()["mem_data"]
+        memory_buffer = MEGABYTE / 2
+        if mem_data:
+            Ram.write_ram(memory_buffer + Registers.getreg_value(dest), mem_data)
+        else:
+            Registers.setreg_value(Registers.getreg_value(dest),result)
