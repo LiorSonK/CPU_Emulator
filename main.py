@@ -12,6 +12,11 @@ while True:
         if startup.debug:
             input("press enter to continue...")
         pipeline.clock_cycle()
+        print(Registers.registers)
     else:
-        print(Registers.latches)
-        break
+        Registers.set_fetch(None)
+        pipeline.clock_cycle_no_fetch()
+        if startup.debug:
+            input("press enter to continue...")
+        if Registers.get_memory()["opcode"] == None:
+            break

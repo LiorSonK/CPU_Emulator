@@ -19,3 +19,18 @@ class pipeline:
         cpu.fetch()
         if startup.debug == True:
             print(f"fetched: {Registers.get_fetch()}")
+
+    @staticmethod
+    def clock_cycle_no_fetch():
+        if startup.debug == True:
+            print(f"writing {Registers.get_memory()} to regs")
+        cpu.writeback()
+        cpu.memory()
+        if startup.debug == True:
+            print(f"memory: {Registers.get_memory()}")
+        cpu.execute()
+        if startup.debug == True:
+            print(f"alu: {Registers.get_alu()}")
+        cpu.decode()
+        if startup.debug == True:
+            print(f"decode: {Registers.get_decode()}")

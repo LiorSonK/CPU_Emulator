@@ -1,4 +1,3 @@
-from scapy.contrib.roce import opcode
 from Modules.hardware.cpu.ControlUnit import ControlUnit
 from isa import isa
 from Modules.hardware.registers import Registers

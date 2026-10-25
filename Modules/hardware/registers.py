@@ -1,3 +1,4 @@
+from Modules.hardware.cpu.cpu_consts import fetch_latch, decode_latch, execute_latch, memory_latch
 from Modules.hardware.hardware_const import REGISTER_COUNT
 
 
@@ -15,10 +16,10 @@ class Registers():
     for ex r0 = register[0] r1 = registers[1] ect..."""
 
     @staticmethod
-    def setreg_value(num, value):
-        if num == 0:
+    def setreg_value(reg_num, value):
+        if reg_num == 0:
             return #register 0 will always be 0
-        Registers.registers[num] = value
+        Registers.registers[reg_num] = value
 
     @staticmethod
     def getreg_value(num):
@@ -55,16 +56,16 @@ class Registers():
     @staticmethod
     def set_fetch(instruction):
         dic = {"instruction": instruction}
-        Registers.latches[0] = dic
+        Registers.latches[fetch_latch] = dic
 
     @staticmethod
     def set_decode(dic):
-        Registers.latches[1] = dic
+        Registers.latches[decode_latch] = dic
 
     @staticmethod
-    def set_execute(dic):
-        Registers.latches[2] = dic
+    def set_alu(dic):
+        Registers.latches[execute_latch] = dic
 
     @staticmethod
     def set_memory(dic):
-        Registers.latches[2] = dic
+        Registers.latches[memory_latch] = dic

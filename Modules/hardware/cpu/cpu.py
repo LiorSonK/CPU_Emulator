@@ -1,3 +1,6 @@
+from turtledemo.sorting_animate import Block
+
+from Modules.hardware.cpu.ControlUnit import ControlUnit
 from Modules.hardware.hardware_const import MEGABYTE
 from Modules.hardware.registers import Registers
 from Modules.hardware.ram import Ram
@@ -12,10 +15,15 @@ class cpu:
         slot = Registers.get_specialreg_value("pc")
         value = Ram.read_ram(slot)
         Registers.set_fetch(value)
+        Registers.set_specialreg_value("pc",slot+1)
 
     @staticmethod
     def decode():
-        disassembler.disassemble_to_regs()
+        if Registers.get_fetch()["instruction"] == None:
+            dic = {"opcode": None, "val1":None, "val2":None, "dest":None}
+            Registers.set_decode(dic)
+        else:
+            disassembler.disassemble_to_regs()
 
     @staticmethod
     def execute():
@@ -25,6 +33,7 @@ class cpu:
         dest = Registers.get_decode()["dest"]
         dic = {}
         if opcode:
+            opcode = ControlUnit.int_to_code[opcode]
             if opcode in need_execute:
                 dic = {"opcode":opcode, "result":None, "dest": dest}
                 result = 0
@@ -61,14 +70,17 @@ class cpu:
                 dic["result"] = result
 
             else:
-                dic = {"opcode":opcode, "result":Registers.getreg_value(val1), "dest": dest}
-            Registers.set_execute(dic)
+                dic = {"opcode":opcode, "result":val1, "dest": dest}
+        else:
+            dic = {"opcode":None, "result":None, "dest": None}
+        Registers.set_alu(dic)
 
 
     @staticmethod
     def memory():
         opcode = Registers.get_alu()["opcode"]
         dest = Registers.get_alu()["dest"]
+        print(Registers.get_alu())
         result = Registers.get_alu()["result"]
         memory_buffer = MEGABYTE/2
         dic = Registers.get_alu()
@@ -80,7 +92,8 @@ class cpu:
                         Ram.write_ram(memory_buffer + Registers.getreg_value(dest), Registers.getreg_value(result))
                     case "load":
                         dic["mem_data"] = Ram.read_ram(memory_buffer + Registers.getreg_value(result))
-
+        else:
+            dic = {"opcode": opcode, "result": result, "dest": dest, "mem_data": None}
         Registers.set_memory(dic)
 
     @staticmethod
@@ -90,8 +103,9 @@ class cpu:
         result = Registers.get_memory()["result"]
         mem_data = Registers.get_memory()["mem_data"]
         memory_buffer = MEGABYTE / 2
-        if mem_data:
-            Ram.write_ram(memory_buffer + Registers.getreg_value(dest), mem_data)
-        else:
-            if result:
-                Registers.setreg_value(Registers.getreg_value(dest),result)
+        if opcode:
+            if mem_data:
+                Ram.write_ram(memory_buffer + Registers.getreg_value(dest), mem_data)
+            else:
+                if result:
+                    Registers.setreg_value(dest,result)
