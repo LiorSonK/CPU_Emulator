@@ -3,5 +3,5 @@ addi r3, r0, 7
 addi r2, r0, 2
 addi r4, r0, 6
 addi r5, r0, 3
-load r1
+load r1, 0
 mov r3, r1

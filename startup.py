@@ -27,9 +27,8 @@ class startup:
     @staticmethod
     def start_menu():
         startup.print_logo()
-        debug = startup.debug_mode()
+        startup.debug_mode()
         startup.clear_screen()
-        return debug
 
     @staticmethod
     def clear_screen():

@@ -5,8 +5,11 @@ class file_handle:
     @staticmethod
     def get_files():
         files = []
-        for file in os.listdir(os.chdir('../../programs')):
-            f = open(file, 'r')
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        dir_path = os.path.abspath(os.path.join(current_dir, '..', '..', 'programs'))
+        for file in os.listdir(dir_path):
+            filepath = os.path.join(dir_path, file)
+            f = open(filepath, 'r')
             files.append(f)
         return files
 

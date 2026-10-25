@@ -6,10 +6,10 @@ class Registers():
     special_registers = {"pc":0,
                         "sp":0, # stack pointer + program counter
                         }
-    latches = [{"instruction":0},
-               {"opcode": "", "val1":0, "val2":0, "dest":None},
-               {"opcode":"", "result":0, "dest": None},
-               {"opcode":"","mem_data":0, "result":0, "dest": None}] #  0 - instruction fetch , 1 - instruction decode, 2 - execute, 3 - memory
+    latches = [{"instruction":None},
+               {"opcode": None, "val1":None, "val2":None, "dest":None},
+               {"opcode":None, "result":None, "dest": None},
+               {"opcode":None,"mem_data":None, "result":None, "dest": None}] #  0 - instruction fetch , 1 - instruction decode, 2 - execute, 3 - memory
     #latches are pipeline registers
     """each arr spot is related to their relative register
     for ex r0 = register[0] r1 = registers[1] ect..."""

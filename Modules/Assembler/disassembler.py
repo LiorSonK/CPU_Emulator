@@ -15,10 +15,11 @@ class disassembler:
     def disassemble_to_regs():
         fetch_dic = Registers.get_fetch()
         instruction = fetch_dic["instruction"]
-        opcode = disassembler.find_opcode(instruction)
-        cmd_type = ControlUnit.code_to_type[opcode]
-        dic = disassembler.disassemble_to_dic(cmd_type,instruction)
-        Registers.set_decode(dic) #sets the
+        if instruction:
+            opcode = disassembler.find_opcode(instruction)
+            cmd_type = ControlUnit.code_to_type[opcode]
+            dic = disassembler.disassemble_to_dic(cmd_type,instruction)
+            Registers.set_decode(dic) #sets the
 
     @staticmethod
     def disassemble_to_dic(type, instruction):

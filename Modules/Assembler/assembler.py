@@ -2,7 +2,7 @@ from Modules.file_handler.file_handle import file_handle
 from Modules.hardware.cpu.ControlUnit import ControlUnit
 from isa import isa
 from Modules.hardware.ram import Ram
-
+from startup import startup
 class assembler:
 
     @staticmethod
@@ -13,10 +13,11 @@ class assembler:
         for file in file_handle.handle_files():
 
             for line in file:
+                if startup.debug:
+                    print(line)
                 line = assembler.pseudo_commands(line)
                 cmd = line.split(" ")[0]
                 try:
-                    print(line)
                     type = ControlUnit.code_to_type[cmd]
                     assembled_line = 0
                     match type:
