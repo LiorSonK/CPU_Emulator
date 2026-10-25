@@ -93,22 +93,3 @@ class alu:
             b1 = b1 // 2
 
         return num
-b1 = 54
-b2 = 765
-print("------------")
-print("python xor : ", b1^b2)
-print("my xor: ", alu.binary_xor(b1,b2))
-print("------------")
-print("python and : ", b1&b2)
-print("my and: ", alu.binary_and(b1,b2))
-print("------------")
-print("python or : ", b1|b2)
-print("my or: ", alu.binary_or(b1,b2))
-print("------------")
-print("python not : ", ~b1)
-print("my not: ", alu.binary_not(b1))
-print("my not is fine cuz python is weird\nor is it me...")
-print("------------")
-print("python add : ", b1+b2)
-print("my and: ", alu.binary_add(b1,b2))
-print("------------")

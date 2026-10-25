@@ -3,7 +3,7 @@ from Modules.hardware.cpu.ControlUnit import ControlUnit
 from isa import isa
 from Modules.hardware.ram import Ram
 
-class addembler:
+class assembler:
 
     @staticmethod
     def assemble_into_ram():
@@ -13,7 +13,7 @@ class addembler:
         for file in file_handle.handle_files():
 
             for line in file:
-                line = addembler.pseudo_commands(line)
+                line = assembler.pseudo_commands(line)
                 cmd = line.split(" ")[0]
                 try:
                     print(line)
@@ -46,6 +46,3 @@ class addembler:
             return line + ", 0"
         return line
 
-
-print(addembler.assemble_into_ram())
-print(Ram.ram[0:100])

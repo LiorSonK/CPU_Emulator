@@ -12,10 +12,10 @@ from Modules.hardware.flags import Flags
 class cpu:
 
     @staticmethod
-    def fetch(register: Registers):
-        slot = register.get_specialreg_value("pc")
+    def fetch():
+        slot = Registers.get_specialreg_value("pc")
         value = Ram.read_ram(slot)
-        register.set_fetch(value)
+        Registers.set_fetch(value)
 
     @staticmethod
     def decode():

@@ -1,7 +1,5 @@
-from colorama.ansi import clear_screen
-
-
 class startup:
+    debug = False
 
     @staticmethod
     def print_logo():
@@ -19,9 +17,11 @@ class startup:
         while True:
             inpt = input("Debug mode (Y/N): ")
             if inpt.lower().strip() == "y":
-                return True
+                startup.debug = True
+                return
             elif inpt.lower().strip() == "n":
-                return False
+                startup.debug = False
+                return
             print("Please answer y/n!")
 
     @staticmethod
